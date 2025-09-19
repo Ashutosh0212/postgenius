@@ -155,3 +155,6 @@ dmypy.json
 
 # GitHub Pages
 .github/workflows/
+
+# Backend (Django) - exclude from frontend deployment
+postgenius_backend/

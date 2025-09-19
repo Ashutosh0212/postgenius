@@ -40,17 +40,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Build
-        run: npm run build
+       - name: Build
+         run: npm run build
         
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+       - name: Fix MIME types
+         run: |
+           # Create .htaccess for proper MIME types
+           echo "AddType application/javascript .js" > build/.htaccess
+           echo "AddType text/css .css" >> build/.htaccess
         
-       - name: Upload artifact
-         uses: actions/upload-pages-artifact@v3
-         with:
-           # Upload build repository
-           path: './build'
+       - name: Setup Pages
+         uses: actions/configure-pages@v4
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload build repository
+          path: './build'
           
       - name: Deploy to GitHub Pages
         id: deployment
