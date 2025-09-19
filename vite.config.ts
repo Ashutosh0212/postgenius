@@ -56,7 +56,12 @@ export default defineConfig({
     assetsDir: 'assets',
     rollupOptions: {
       output: {
-        assetFileNames: 'assets/[name].[hash].[ext]',
+        assetFileNames: (assetInfo) => {
+          const ext = assetInfo.name.split('.').pop();
+          if (ext === 'js') return 'assets/[name].[hash].js';
+          if (ext === 'css') return 'assets/[name].[hash].css';
+          return 'assets/[name].[hash].[ext]';
+        },
         chunkFileNames: 'assets/[name].[hash].js',
         entryFileNames: 'assets/[name].[hash].js',
       },
