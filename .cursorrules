@@ -1,0 +1,342 @@
+# PostGenius Social Media Automation Backend Development Rules
+
+## Project Overview
+This is a Django REST API backend for PostGenius, a comprehensive social media automation platform with AI-powered content generation. The frontend is built with React/TypeScript and requires a robust backend to support all features.
+
+## Core Features Analysis
+
+### 1. User Management & Authentication
+- User registration/login with email verification
+- JWT token-based authentication
+- Password reset functionality
+- User profile management
+- Team member invitations and role management
+- Subscription and billing integration
+
+### 2. Social Media Platform Integration (Incremental Implementation)
+- **Phase 1**: Start with core platforms (LinkedIn, Instagram, Twitter)
+- **Phase 2**: Add Facebook, TikTok, YouTube
+- **Phase 3**: Add Pinterest, Threads, Snapchat
+- **Phase 4**: Add WhatsApp, Telegram, Reddit
+- OAuth integration for each platform
+- Platform-specific API rate limiting and error handling
+- Account connection status monitoring
+- Platform-specific content formatting and character limits
+- Cross-platform posting capabilities
+- Google API integration for enhanced features
+
+### 3. AI Content Generation System
+- OpenAI GPT integration for content generation
+- Content categorization (Marketing Tips, Industry News, Motivation, Educational, Company Updates)
+- Platform-specific content optimization
+- Trending topic analysis and hashtag generation
+- Content quality scoring and engagement prediction
+- Image generation integration (DALL-E or similar)
+- Brand voice learning and customization
+
+### 4. Content Management System
+- Draft creation and editing
+- Content approval workflow
+- Bulk content operations
+- Content templates and reuse
+- Media attachment handling
+- Content versioning and history
+- Content tagging and categorization
+
+### 5. Scheduling & Calendar System
+- Advanced scheduling with optimal timing AI
+- Recurring post scheduling
+- Content calendar visualization
+- Time zone handling
+- Platform-specific optimal posting times
+- Schedule conflict detection and resolution
+
+### 6. Analytics & Reporting
+- Real-time engagement metrics
+- Cross-platform performance comparison
+- AI vs manual content performance analysis
+- Audience growth tracking
+- Engagement rate calculations
+- Custom date range reporting
+- Export functionality (PDF, CSV)
+- Performance prediction algorithms
+
+### 7. Team Collaboration
+- Multi-user workspace management
+- Role-based permissions (Admin, Manager, Creator, Viewer)
+- Content approval workflows
+- Team activity feeds
+- Comment and feedback system
+- Shared content libraries
+
+### 8. Billing & Subscription Management
+- Multiple subscription tiers (Free, Pro, Enterprise)
+- Usage tracking and limits
+- Payment processing integration (Stripe)
+- Billing history and invoicing
+- Plan upgrade/downgrade handling
+- Usage-based pricing for AI generation
+
+## Technical Requirements
+
+### Django Project Structure
+```
+postgenius_backend/
+├── manage.py
+├── requirements.txt
+├── .env.example
+├── postgenius/
+│   ├── __init__.py
+│   ├── settings/
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   ├── development.py
+│   │   ├── production.py
+│   │   └── testing.py
+│   ├── urls.py
+│   └── wsgi.py
+├── apps/
+│   ├── __init__.py
+│   ├── authentication/
+│   ├── social_platforms/
+│   ├── content/
+│   ├── ai_generation/
+│   ├── analytics/
+│   ├── scheduling/
+│   ├── team_management/
+│   ├── billing/
+│   └── notifications/
+├── utils/
+├── static/
+├── media/
+└── tests/
+```
+
+### Database Models Required
+
+#### User Management
+- User (extends Django User)
+- UserProfile
+- Team
+- TeamMember
+- Invitation
+
+#### Social Platforms
+- SocialPlatform
+- ConnectedAccount
+- PlatformCredentials
+- PlatformMetrics
+
+#### Content Management
+- ContentPost
+- ContentDraft
+- ContentTemplate
+- MediaAttachment
+- ContentCategory
+- ContentTag
+- ApprovalWorkflow
+
+#### AI Generation
+- AIGenerationRequest
+- ContentGenerationLog
+- BrandVoiceProfile
+- TrendingTopic
+- HashtagSuggestion
+
+#### Scheduling
+- ScheduledPost
+- PostingSchedule
+- OptimalTimeSlot
+- ScheduleConflict
+
+#### Analytics
+- EngagementMetric
+- PerformanceReport
+- AudienceInsight
+- PlatformAnalytics
+- ContentPerformance
+
+#### Billing
+- Subscription
+- BillingHistory
+- UsageTracking
+- PlanFeature
+
+### API Endpoints Structure
+
+#### Authentication (/api/auth/)
+- POST /register/
+- POST /login/
+- POST /logout/
+- POST /refresh/
+- POST /password-reset/
+- POST /password-reset-confirm/
+- GET /profile/
+- PUT /profile/
+- POST /change-password/
+
+#### Social Platforms (/api/platforms/)
+- GET /connected-accounts/
+- POST /connect-account/
+- PUT /connected-accounts/{id}/
+- DELETE /connected-accounts/{id}/
+- POST /refresh-token/
+- GET /platform-status/
+
+#### Content Management (/api/content/)
+- GET /posts/
+- POST /posts/
+- GET /posts/{id}/
+- PUT /posts/{id}/
+- DELETE /posts/{id}/
+- POST /posts/{id}/approve/
+- POST /posts/{id}/reject/
+- GET /drafts/
+- POST /drafts/
+- GET /templates/
+- POST /templates/
+
+#### AI Generation (/api/ai/)
+- POST /generate-content/
+- GET /generation-history/
+- POST /enhance-content/
+- GET /trending-topics/
+- POST /generate-image/
+- GET /brand-voice/
+- PUT /brand-voice/
+
+#### Scheduling (/api/scheduling/)
+- GET /calendar/
+- POST /schedule-post/
+- PUT /scheduled-posts/{id}/
+- DELETE /scheduled-posts/{id}/
+- GET /optimal-times/
+- POST /bulk-schedule/
+
+#### Analytics (/api/analytics/)
+- GET /dashboard-stats/
+- GET /engagement-metrics/
+- GET /platform-performance/
+- GET /content-performance/
+- GET /audience-insights/
+- POST /generate-report/
+- GET /reports/
+
+#### Team Management (/api/team/)
+- GET /team-members/
+- POST /invite-member/
+- PUT /team-members/{id}/
+- DELETE /team-members/{id}/
+- GET /permissions/
+- PUT /permissions/
+
+#### Billing (/api/billing/)
+- GET /subscription/
+- POST /upgrade-plan/
+- GET /usage/
+- GET /billing-history/
+- POST /payment-method/
+- GET /invoices/
+
+### Key Dependencies
+- Django 4.2+
+- Django REST Framework 3.14+
+- Django CORS Headers
+- Celery (for background tasks)
+- Redis (for caching and Celery)
+- PostgreSQL (primary database)
+- Pillow (image processing)
+- OpenAI Python SDK
+- Google API Client Library
+- Social Auth App Django
+- Stripe Python SDK
+- SendGrid (email service)
+- AWS S3 (file storage)
+
+### Environment Variables
+```
+SECRET_KEY=your-secret-key
+DEBUG=True
+DATABASE_URL=postgresql://user:password@localhost:5432/postgenius
+REDIS_URL=redis://localhost:6379/0
+OPENAI_API_KEY=your-openai-key
+GOOGLE_API_KEY=AIzaSyA251ko5t70OXunXLtlm_GWfZdIqMg692M
+STRIPE_SECRET_KEY=your-stripe-key
+STRIPE_PUBLISHABLE_KEY=your-stripe-publishable-key
+SENDGRID_API_KEY=your-sendgrid-key
+AWS_ACCESS_KEY_ID=your-aws-key
+AWS_SECRET_ACCESS_KEY=your-aws-secret
+AWS_STORAGE_BUCKET_NAME=your-bucket
+```
+
+### Development Guidelines
+
+#### Code Style
+- Follow PEP 8 guidelines
+- Use type hints for all functions
+- Write comprehensive docstrings
+- Use meaningful variable and function names
+- Implement proper error handling
+
+#### Testing
+- Write unit tests for all models
+- Write integration tests for API endpoints
+- Use pytest for testing framework
+- Aim for 90%+ code coverage
+- Test edge cases and error conditions
+
+#### Security
+- Implement proper authentication and authorization
+- Use HTTPS in production
+- Validate all input data
+- Implement rate limiting
+- Use environment variables for sensitive data
+- Regular security audits
+
+#### Performance
+- Use database indexing appropriately
+- Implement caching strategies
+- Optimize database queries
+- Use pagination for large datasets
+- Implement background task processing
+- Monitor API response times
+
+### Deployment Considerations
+- Use Docker for containerization
+- Implement CI/CD pipeline
+- Use environment-specific settings
+- Set up monitoring and logging
+- Implement backup strategies
+- Use load balancing for scalability
+
+## Current Development Status
+- ✅ Frontend analysis completed
+- ✅ Backend requirements documented
+- 🔄 Django project setup in progress
+- ⏳ User authentication system
+- ⏳ Social platform integrations
+- ⏳ AI content generation
+- ⏳ Content management system
+- ⏳ Analytics and reporting
+- ⏳ Scheduling system
+- ⏳ Team management
+- ⏳ Billing system
+
+## Next Steps
+1. Set up Django project with proper structure
+2. Configure database and basic settings
+3. Implement user authentication
+4. Create core models and migrations
+5. Build REST API endpoints
+6. Integrate with external services
+7. Implement testing framework
+8. Set up deployment configuration
+
+## Notes
+- This backend must support the existing React frontend
+- All API responses should follow consistent JSON structure
+- Implement proper error handling and status codes
+- Use Django REST Framework serializers for data validation
+- Implement proper logging for debugging and monitoring
+- Consider scalability from the beginning
+- Maintain backward compatibility for API changes
