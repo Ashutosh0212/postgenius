@@ -5,7 +5,7 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/postgenius/',
+  base: '/',
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
